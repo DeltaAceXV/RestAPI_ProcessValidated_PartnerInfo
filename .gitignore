@@ -1,0 +1,83 @@
+## Build results
+bin/
+obj/
+out/
+
+## User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+## Visual Studio
+.vs/
+
+## Visual Studio Code
+.vscode/
+
+## Rider
+.idea/
+
+## ASP.NET Secrets
+**/secrets.json
+*.secret
+*.userprefs
+
+## DotNet CLI
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+## NuGet
+*.nupkg
+*.snupkg
+.nuget/
+
+## Logs
+*.log
+Logs/
+
+## Database
+*.mdf
+*.ldf
+*.sqlite
+
+## Docker
+**/docker-compose.override.yml
+**/.dockerignore
+**/Dockerfile.*
+
+## Publish and Deploy
+*.publish/
+publish/
+App_Data/
+
+## Others
+node_modules/
+.env
+*.db
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Backup files
+*.bak
+*.tmp
+*.swp
+*.~*
+
+# Test results
+TestResults/
+coverage/
+*.coverage
+*.coveragexml
+*.testresult
+
+# JetBrains Rider
+.idea/
+*.sln.iml
