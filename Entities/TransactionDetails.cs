@@ -24,6 +24,7 @@ namespace RestAPI_ProcessValidated_PartnerInfo.Entities
         public string PartnerPassword { get; set; }
 
         [Required]
+        [Range(0, long.MaxValue, ErrorMessage = "The total amount should not be less than 0")]
         public long TotalAmount { get; set; }
 
         public ItemDetail[] Items { get; set; }
@@ -36,6 +37,11 @@ namespace RestAPI_ProcessValidated_PartnerInfo.Entities
 
         public DateTime TimeStampDate { 
             get {
+                if (string.IsNullOrWhiteSpace(this.TimeStamp))
+                {
+                    return default;
+                }
+
                 return this.TimeStamp.ConvertStringToDateTime();
             }
         }

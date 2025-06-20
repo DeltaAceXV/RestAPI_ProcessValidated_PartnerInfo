@@ -11,7 +11,14 @@ namespace RestAPI_ProcessValidated_PartnerInfo.Helper
             }
 
             var convertedValue = value.ToString();
-            convertedValue = convertedValue.PadLeft(1,' ')!.Substring(convertedValue.Length - 1);
+            var digitIndex = convertedValue.IndexOf($"{amountDigit}");
+
+            if (digitIndex < 0)
+            {
+                return false;
+            }
+
+            convertedValue = convertedValue.Substring(digitIndex).Replace("0","");
 
             return convertedValue.Equals(amountDigit);
         }

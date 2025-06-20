@@ -32,12 +32,13 @@
       "commandName": "Docker",
       "launchBrowser": true,
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/swagger",
+      "applicationUrl": "http://localhost:8083",
       "environmentVariables": {
-        "ASPNETCORE_HTTPS_PORTS": "8081",
-        "ASPNETCORE_HTTP_PORTS": "8080"
+        "ASPNETCORE_HTTP_PORTS": "8082"
       },
       "publishAllPorts": true,
-      "useSSL": false
+      "useSSL": false,
+      "httpPort": 8083
     }
   },
   "$schema": "http://json.schemastore.org/launchsettings.json",

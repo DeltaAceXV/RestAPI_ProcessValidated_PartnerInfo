@@ -52,7 +52,7 @@ namespace RestAPI_ProcessValidated_PartnerInfo.Service
 
             if (isInvalidText)
             {
-                return Result<string>.Error($"[AesEncryptionService][Encrypt] - Raw text is blank {rawText}");
+                return Result<string>.Failed($"[AesEncryptionService][Encrypt] - Raw text is blank {rawText}");
             }
 
             _aes.GenerateIV();
@@ -87,13 +87,13 @@ namespace RestAPI_ProcessValidated_PartnerInfo.Service
 
             if (isInvalidText)
             {
-                return Result<string>.Error($"[AesEncryptionService][Decrypt] - Cypher text is blank {cypherText}");
+                return Result<string>.Failed($"[AesEncryptionService][Decrypt] - Cypher text is blank {cypherText}");
             }
 
             bool IsDecodable = Convert.TryFromBase64String(cypherText, buffer, out int writtenBytes);
             if (!IsDecodable)
             {
-                return Result<string>.Error($"[AesEncryptionService][Decrypt] - Cypher text provided is not a Base64 string");
+                return Result<string>.Failed($"[AesEncryptionService][Decrypt] - Cypher text provided is not a Base64 string");
             }
 
             combined = Convert.FromBase64String(cypherText);

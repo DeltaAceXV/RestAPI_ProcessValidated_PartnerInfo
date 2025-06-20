@@ -6,9 +6,10 @@ using RestAPI_ProcessValidated_PartnerInfo.Service;
 
 namespace RestAPI_ProcessValidated_PartnerInfo.Controllers
 {
-    [Route("[controller]")]
     [ApiController]
     [ApiVersion("1.0")]
+    [Route("[controller]")]
+    [Route("[controller]/v{version:apiVersion}")]
     public class ApiController : ControllerBase
     {
 
@@ -34,4 +35,5 @@ namespace RestAPI_ProcessValidated_PartnerInfo.Controllers
             return await this._processAmountService.ProcessAmount(request);
         }
     }
+
 }

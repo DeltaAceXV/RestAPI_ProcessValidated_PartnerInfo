@@ -10,7 +10,7 @@ namespace RestAPI_ProcessValidated_PartnerInfo.Entities
         [Required, StringLength(100), MinLength(1)]
         public string Name { get; set; }
 
-        [Required]
+        [Required, Range(minimum:1, maximum: int.MaxValue)]
         public int Qty { get; set; }
 
         [Required, Range(minimum:1, maximum: 99999)]

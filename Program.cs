@@ -9,17 +9,6 @@ try
         ContentRootPath = AppContext.BaseDirectory,
     });
 
-    builder.WebHost.ConfigureKestrel(options =>
-    {
-        options.ListenAnyIP(8081);
-    });
-
-    //var pathToService = Environment.ProcessPath;
-    //var pathToContentRoot = Path.GetDirectoryName(pathToService);
-
-    //Directory.SetCurrentDirectory(pathToContentRoot!);
-    //builder.Environment.ContentRootPath = pathToContentRoot!;
-
     var configuration = new ConfigurationBuilder()
         .SetBasePath(AppContext.BaseDirectory)
         .AddJsonFile("appsettings.json", false, true)

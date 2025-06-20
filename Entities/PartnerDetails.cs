@@ -1,6 +1,6 @@
 ﻿namespace RestAPI_ProcessValidated_PartnerInfo.Entities
 {
-    public class PartnerDetails
+    public record PartnerDetails
     {
         public PartnerDetails(string partnerNo, string allowedPartner, string partnerPassword) { 
             this.PartnerNo = partnerNo;

@@ -3,36 +3,21 @@ using System.ComponentModel.DataAnnotations;
 
 namespace RestAPI_ProcessValidated_PartnerInfo.DTO
 {
-    public class SummaryAmountResponse
+    public class SummaryAmountResponse : BaseResult
     {
         private const decimal MaximumDiscount = 0.2M;
 
-        protected SummaryAmountResponse(int result, int errorCode, long totalAmount, string? resultMessage) { 
+        protected SummaryAmountResponse(int result, long totalAmount, string? resultMessage) : base(result, resultMessage) { 
             this.Result = result;
-            this.ErrorCode = errorCode;
             this.TotalAmount = totalAmount;
             this.ResultMessage = resultMessage;
         }
 
-        public int Result { get; } = 1;
-        public int ErrorCode { get; } = 0;
-
-        public string? ResultMessage { get; }
-
-        [Range(0, long.MaxValue, ErrorMessage = "TotalAmount must be a positive value.")]
         public long TotalAmount { get; set; }
-
-        [Range(0, long.MaxValue, ErrorMessage = "TotalDiscount must be a positive value.")]
         public long TotalDiscount => CalculateDiscount();
-
-        [Range(0, long.MaxValue, ErrorMessage = "FinalAmount must be a positive value.")]
         public long FinalAmount => this.TotalAmount - this.TotalDiscount;
 
-        public static SummaryAmountResponse Success(long totalAmount) => new SummaryAmountResponse(1, errorCode:0, totalAmount: totalAmount, default);
-
-        public static SummaryAmountResponse Failure(string resultMessage, int errorCode) {
-            return new(result: 0, errorCode: errorCode, totalAmount: default, resultMessage: resultMessage);
-        }
+        public static SummaryAmountResponse Success(long totalAmount) => new SummaryAmountResponse(1, totalAmount: totalAmount, default);
 
         private long CalculateDiscount() {
             if (this.TotalAmount < 20000)

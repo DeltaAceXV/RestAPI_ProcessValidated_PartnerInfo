@@ -5,6 +5,7 @@ using RestAPI_ProcessValidated_PartnerInfo.Middleware;
 using RestAPI_ProcessValidated_PartnerInfo.Repository;
 using RestAPI_ProcessValidated_PartnerInfo.Service;
 using Swashbuckle.AspNetCore.Swagger;
+using System.Text.Json.Serialization;
 
 namespace RestAPI_ProcessValidated_PartnerInfo
 {
@@ -22,6 +23,7 @@ namespace RestAPI_ProcessValidated_PartnerInfo
             services.AddControllers()
                 .AddJsonOptions(options => { 
                     options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+                    options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
                 });
 
             services.AddSwaggerGen(c =>

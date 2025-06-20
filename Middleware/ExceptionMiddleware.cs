@@ -25,9 +25,18 @@ namespace RestAPI_ProcessValidated_PartnerInfo.Middleware
             }
             catch (HttpStatusCodeException ex)
             {
+                /* Logic changed to fit the returning response when failed as per specifications */
+                //await context.Response.WriteAsync(
+                //    ex.Message  
+                //);
+                
                 context.Response.StatusCode = ex.StatusCode;
+                context.Response.ContentType = $"application/json";
+
                 await context.Response.WriteAsync(
-                    ex.Message  
+                    JsonConvert.SerializeObject(
+                        BaseResult.Failed($"{ex.Message}")
+                    )    
                 );
             }
             catch (Exception ex)
@@ -35,9 +44,10 @@ namespace RestAPI_ProcessValidated_PartnerInfo.Middleware
                 string errorMessage = ex.Message + (ex.InnerException ?? new()).Message;
                 await this._logger.Error($"{errorMessage} {ex.StackTrace}", ex);
 
+                context.Response.ContentType = $"application/json";
                 await context.Response.WriteAsync(
                     JsonConvert.SerializeObject(
-                        Result<bool>.Error($"{errorMessage}")
+                        BaseResult.Failed($"{errorMessage}")
                     )
                 );
 

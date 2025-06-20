@@ -79,7 +79,7 @@ namespace RestAPI_ProcessValidated_PartnerInfo.Service
 
         private async Task ValidateExpiredRequest()
         {
-            DateTime currentTime = DateTime.Now;
+            DateTimeOffset currentTime = DateTimeOffset.Now;
 
             var checkTime = currentTime - this._request.TimeStampDate;
 
