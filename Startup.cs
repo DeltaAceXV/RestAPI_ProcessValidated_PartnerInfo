@@ -1,11 +1,14 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿using Microsoft.AspNetCore.RateLimiting;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.OpenApi.Models;
 using RestAPI_ProcessValidated_PartnerInfo.DTO;
 using RestAPI_ProcessValidated_PartnerInfo.Middleware;
 using RestAPI_ProcessValidated_PartnerInfo.Repository;
 using RestAPI_ProcessValidated_PartnerInfo.Service;
 using Swashbuckle.AspNetCore.Swagger;
+using System.Net;
 using System.Text.Json.Serialization;
+using System.Threading.RateLimiting;
 
 namespace RestAPI_ProcessValidated_PartnerInfo
 {
@@ -21,10 +24,20 @@ namespace RestAPI_ProcessValidated_PartnerInfo
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers()
-                .AddJsonOptions(options => { 
-                    options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
-                    options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+            .AddJsonOptions(options => { 
+                options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+                options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+            });
+
+            services.AddRateLimiter(options => {
+                options.RejectionStatusCode = (int)HttpStatusCode.TooManyRequests;
+
+                options.AddConcurrencyLimiter($"Concurrency", options => {
+                    options.PermitLimit = 10;
+                    options.QueueLimit = 20;
+                    options.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
                 });
+            });
 
             services.AddSwaggerGen(c =>
             {
@@ -90,7 +103,9 @@ namespace RestAPI_ProcessValidated_PartnerInfo
                 options.RoutePrefix = "swagger";
             });
 
-            app.MapControllers();
+            app.UseRateLimiter();
+
+            app.MapControllers().RequireRateLimiting("Concurrency");
             app.Run();
         }
     }
