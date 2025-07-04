@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <Folder Include="Config\" />
+    <Folder Include="SQL\" />
     <None Update="appsettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
